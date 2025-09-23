@@ -7,5 +7,31 @@
 
 import Foundation
 
-print("Hello, World!")
+print("XML 파싱을 시작합니다.")
 
+func parseFacilities(_ source: String) throws -> [FacilityDTO] {
+    guard let facilitiesXMLData = facilitiesXMLString.data(using: .utf8) else {
+        throw XMLError.xmlDataNotCreated
+    }
+    
+    let parser = XMLParser(data: facilitiesXMLData)
+    let parserDelegate = FacilityXMLParserDelegate()
+    parser.delegate = parserDelegate
+    
+    if parser.parse() {
+        return parserDelegate.facilities
+    } else {
+        throw parser.parserError ?? XMLError.parsingFailedButErrorNotFound
+    }
+    
+}
+
+
+do {
+    let facilities = try parseFacilities(facilitiesXMLString)
+    facilities.enumerated().forEach { (index, facility) in
+        print("\(index). \(facility.fcltynm)")
+    }
+} catch {
+    print(error.localizedDescription)
+}
