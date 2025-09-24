@@ -27,8 +27,29 @@ func parseFacilities(_ source: String) throws -> [FacilityDTO] {
 }
 
 
+func parseFacilityDetails(_ source: String) throws -> [FacilityDetailDTO] {
+    guard let facilityDetailsXMLData = facilityDetailMock.data(using: .utf8) else {
+        throw XMLError.xmlDataNotCreated
+    }
+    
+    let parser = XMLParser(data: facilityDetailsXMLData)
+    let parserDelegate = FacilityDetailXMLParserDelegate()
+    parser.delegate = parserDelegate
+    
+    if parser.parse() {
+        return parserDelegate.facilityDetails
+    } else {
+        throw parser.parserError ?? XMLError.parsingFailedButErrorNotFound
+    }
+}
+
 do {
-    let facilities = try parseFacilities(facilitiesXMLString)
+//    let facilities = try parseFacilities(facilitiesXMLString)
+//    facilities.enumerated().forEach { (index, facility) in
+//        print("\(index). \(facility.fcltynm)")
+//    }
+    
+    let facilities = try parseFacilityDetails(facilityDetailMock)
     facilities.enumerated().forEach { (index, facility) in
         print("\(index). \(facility.fcltynm)")
     }
