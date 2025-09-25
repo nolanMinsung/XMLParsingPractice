@@ -7,52 +7,28 @@
 
 import Foundation
 
-print("XML 파싱을 시작합니다.")
-
-func parseFacilities(_ source: String) throws -> [FacilityDTO] {
-    guard let facilitiesXMLData = facilitiesXMLString.data(using: .utf8) else {
-        throw XMLError.xmlDataNotCreated
-    }
-    
-    let parser = XMLParser(data: facilitiesXMLData)
-    let parserDelegate = FacilityXMLParserDelegate()
-    parser.delegate = parserDelegate
-    
-    if parser.parse() {
-        return parserDelegate.facilities
-    } else {
-        throw parser.parserError ?? XMLError.parsingFailedButErrorNotFound
-    }
-    
-}
+import XMLCoder
 
 
-func parseFacilityDetails(_ source: String) throws -> [FacilityDetailDTO] {
-    guard let facilityDetailsXMLData = facilityDetailMock.data(using: .utf8) else {
-        throw XMLError.xmlDataNotCreated
-    }
-    
-    let parser = XMLParser(data: facilityDetailsXMLData)
-    let parserDelegate = FacilityDetailXMLParserDelegate()
-    parser.delegate = parserDelegate
-    
-    if parser.parse() {
-        return parserDelegate.facilityDetails
-    } else {
-        throw parser.parserError ?? XMLError.parsingFailedButErrorNotFound
-    }
-}
+guard let performanceListXMLData = performanceListMock.data(using: .utf8) else { fatalError() }
+guard let performanceDetailXMLData = performanceDetailMock.data(using: .utf8) else { fatalError() }
+guard let facilityListXMLData = facilityListMock.data(using: .utf8) else { fatalError() }
+guard let facilityDetailXMLData = facilityDetailMock.data(using: .utf8) else { fatalError() }
+guard let boxOfficeListXMLData = boxOfficeListMock.data(using: .utf8) else { fatalError() }
+
 
 do {
-//    let facilities = try parseFacilities(facilitiesXMLString)
-//    facilities.enumerated().forEach { (index, facility) in
-//        print("\(index). \(facility.fcltynm)")
-//    }
+    let performanceListXMLData = try XMLDecoder(trimValueWhitespaces: true, removeWhitespaceElements: true).decode(PerformanceListResponse.self, from: performanceListXMLData)
+    let performanceDetailXMLData = try XMLDecoder(trimValueWhitespaces: true, removeWhitespaceElements: true).decode(PerformanceDetailResponse.self, from: performanceDetailXMLData)
+    let facilityListXMLData = try XMLDecoder(trimValueWhitespaces: true, removeWhitespaceElements: true).decode(FacilityListResponse.self, from: facilityListXMLData)
+    let facilityDetailXMLData = try XMLDecoder(trimValueWhitespaces: true, removeWhitespaceElements: true).decode(FacilityDetailResponse.self, from: facilityDetailXMLData)
+    let boxOfficeListXMLData = try XMLDecoder(trimValueWhitespaces: true, removeWhitespaceElements: true).decode(BoxOfficeListResponse.self, from: boxOfficeListXMLData)
     
-    let facilities = try parseFacilityDetails(facilityDetailMock)
-    facilities.enumerated().forEach { (index, facility) in
-        print("\(index). \(facility.fcltynm)")
-    }
+    dump(performanceListXMLData)
+    dump(performanceDetailXMLData)
+    dump(facilityListXMLData)
+    dump(facilityDetailXMLData)
+    dump(boxOfficeListXMLData)
 } catch {
     print(error.localizedDescription)
 }

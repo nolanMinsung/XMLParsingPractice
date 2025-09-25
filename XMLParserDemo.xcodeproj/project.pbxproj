@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		4E9BFBD92E8516B000EB4408 /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4E9BFBD82E8516B000EB4408 /* XMLCoder */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		4EA0C5CD2E82C7C800AB97BA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E9BFBD92E8516B000EB4408 /* XMLCoder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +84,7 @@
 			);
 			name = XMLParserDemo;
 			packageProductDependencies = (
+				4E9BFBD82E8516B000EB4408 /* XMLCoder */,
 			);
 			productName = XMLParserDemo;
 			productReference = 4EA0C5CF2E82C7C800AB97BA /* XMLParserDemo */;
@@ -108,6 +114,9 @@
 			);
 			mainGroup = 4EA0C5C62E82C7C800AB97BA;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4E9BFBD72E8516B000EB4408 /* XCRemoteSwiftPackageReference "XMLCoder" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4EA0C5D02E82C7C800AB97BA /* Products */;
 			projectDirPath = "";
@@ -293,6 +302,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4E9BFBD72E8516B000EB4408 /* XCRemoteSwiftPackageReference "XMLCoder" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CoreOffice/XMLCoder.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.17.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		4E9BFBD82E8516B000EB4408 /* XMLCoder */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E9BFBD72E8516B000EB4408 /* XCRemoteSwiftPackageReference "XMLCoder" */;
+			productName = XMLCoder;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4EA0C5C72E82C7C800AB97BA /* Project object */;
 }
