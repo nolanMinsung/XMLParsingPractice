@@ -41,16 +41,16 @@ let performanceListParam = PerformanceListRequestParameter(
     eddate: .now.addingTimeInterval(3600 * 24 * 7),
     cpage: 1,
     rows: 101,
-//    shprfnm: <#T##String?#>,
-//    shprfnmfct: <#T##String?#>,
-//    shcate: <#T##String?#>,
+//    shprfnm: nil,
+//    shprfnmfct: nil,
+//    shcate: nil,
     prfplccd: "FC001247",
-//    signgucode: <#T##String?#>,
-//    signgucodesub: <#T##String?#>,
-//    kidstate: <#T##String?#>,
-//    prfstate: <#T##String?#>,
-//    openrun: <#T##String?#>,
-//    afterdate: <#T##String?#>
+//    signgucode: nil,
+//    signgucodesub: nil,
+//    kidstate: nil,
+//    prfstate: nil,
+//    openrun: nil,
+//    afterdate: nil
 )
 
 //do {
@@ -100,16 +100,35 @@ let performanceListParam = PerformanceListRequestParameter(
 
 
 // MARK: - 공연시설 상세
+//do {
+//    let facilityDetail = try await NetworkManager.requestValue(
+//        router: .getFacilityDetail(apiKey: InfoPlist.apiKey, facilityID: "FC001247"),
+//        decodingType: FacilityDetailResponse.self
+//    )
+//    dump(facilityDetail)
+//} catch {
+//    dump(error)
+//}
+
+
+// MARK: - 예매상황판
+let boxOfficeRequestParam = BoxOfficeRequestParameter(
+    service: InfoPlist.apiKey,
+    stdate: .now.addingTimeInterval(-3600 * 24 * 2),
+    eddate: .now.addingTimeInterval(-3600 * 24 * 1),
+    catecode: nil,
+    area: nil,
+    srchseatscale: nil
+)
 do {
-    let facilityDetail = try await NetworkManager.requestValue(
-        router: .getFacilityDetail(apiKey: InfoPlist.apiKey, facilityID: "FC001247"),
-        decodingType: FacilityDetailResponse.self
+    let boxOffice = try await NetworkManager.requestValue(
+        router: .getBoxOffice(param: boxOfficeRequestParam),
+        decodingType: BoxOfficeListResponse.self
     )
-    dump(facilityDetail)
+    dump(boxOffice)
 } catch {
     dump(error)
 }
-
 
 //let s = try await NetworkManager.requestString(router: .getPerformanceList(param: performanceListParam))
 //let s = try await NetworkManager.requestString(router: .getPerformanceDetail(apiKey: InfoPlist.apiKey, performanceID: "PF275019"))
