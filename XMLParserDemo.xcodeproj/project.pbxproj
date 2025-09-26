@@ -14,8 +14,8 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		4EA0C5CD2E82C7C800AB97BA /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
+			buildActionMask = 8;
+			dstPath = usr/share/man/man1;
 			dstSubfolderSpec = 0;
 			files = (
 			);
@@ -264,10 +264,14 @@
 		};
 		4EA0C5D72E82C7C800AB97BA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 4EA0C5D12E82C7C800AB97BA /* XMLParserDemo */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = 548W892M42;
 				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = XMLParserDemo/Info.plist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -275,10 +279,14 @@
 		};
 		4EA0C5D82E82C7C800AB97BA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 4EA0C5D12E82C7C800AB97BA /* XMLParserDemo */;
+			baseConfigurationReferenceRelativePath = Secrets.xcconfig;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = 548W892M42;
 				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = XMLParserDemo/Info.plist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};

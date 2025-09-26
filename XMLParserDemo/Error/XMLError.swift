@@ -20,3 +20,31 @@ enum XMLError: LocalizedError {
         }
     }
 }
+
+
+// MARK: - Error XML 예시
+
+// APIKey 누락
+/*
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dbs>
+    <db>
+        <returncode>02</returncode>
+        <errmsg>SERVICE KEY IS NOT REGISTERED ERROR</errmsg>
+        <responsetime>2025-09-26 12:41:11</responsetime>
+    </db>
+</dbs>
+*/
+
+
+// row가 100 초과 시
+/*
+ <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <dbs>
+        <db>
+            <returncode>06</returncode>
+            <errmsg>ìµë ì¡°íìë 100ê±´ê¹ì§ ê°ë¥í©ëë¤.</errmsg>
+            <responsetime>2025-09-26 12:46:41</responsetime>
+    </db>
+ </dbs>
+ */
