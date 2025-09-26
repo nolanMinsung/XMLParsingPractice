@@ -51,17 +51,16 @@ final class NetworkManager {
     }
     
     static func requestString(router: KOPISRouter) async throws -> String {
-        dump(router.queryParameters)
         let request = AF.request(
             router.endPoint,
             method: router.method,
             parameters: router.queryParameters,
+            encoding: URLEncoding.queryString,
             headers: router.headers,
         )
-        
         do {
-            let value = try await request.serializingString().value
-            print(value)
+            // utf8로 인코딩 필수!
+            let value = try await request.serializingString(encoding: .utf8).value
             return value
         } catch {
             throw error

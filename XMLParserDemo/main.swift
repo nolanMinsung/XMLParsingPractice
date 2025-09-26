@@ -52,15 +52,29 @@ let performanceListParam = PerformanceListRequestParameter(
 //    afterdate: <#T##String?#>
 )
 
+// MARK: - 공연 정보 목록
+//do {
+//    let performanceList = try await NetworkManager.requestValue(
+//        router: .getPerformanceList(param: performanceListParam),
+//        decodingType: PerformanceListResponse.self
+//    )
+//    dump(performanceList)
+//} catch {
+//    print(error.localizedDescription)
+//}
+
+
+// MARK: - 공연 상세 정보
 do {
-    let performanceList = try await NetworkManager.requestValue(
-        router: .getPerformanceList(param: performanceListParam),
-        decodingType: PerformanceListResponse.self
+    let performanceDetail = try await NetworkManager.requestValue(
+        router: .getPerformanceDetail(apiKey: InfoPlist.apiKey, performanceID: "PF273149"),
+        decodingType: PerformanceDetailResponse.self
     )
-    dump(performanceList)
+    dump(performanceDetail)
 } catch {
     print(error.localizedDescription)
 }
 
 //let s = try await NetworkManager.requestString(router: .getPerformanceList(param: performanceListParam))
-//dump(s)
+//let s = try await NetworkManager.requestString(router: .getPerformanceDetail(apiKey: InfoPlist.apiKey, performanceID: "PF275019"))
+//print(s)

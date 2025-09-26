@@ -11,21 +11,27 @@ import Alamofire
 
 enum KOPISRouter {
     case getPerformanceList(param: PerformanceListRequestParameter)
+    case getPerformanceDetail(apiKey: String, performanceID: String)
+}
+
+extension KOPISRouter {
     
-    var baseURL: String { "http://www.kopis.or.kr/openApi/restful" }
+    var baseURL: String { "https://www.kopis.or.kr/openApi/restful" }
     var path: String {
         switch self {
         case .getPerformanceList:
-            "/pblprfr"
+            return "/pblprfr"
+        case .getPerformanceDetail(_, let performanceID):
+            return "/pblprfr/\(performanceID)"
         }
     }
     var endPoint: String {
-        baseURL + path
+        return baseURL + path
     }
     
     var method: HTTPMethod {
         switch self {
-        case .getPerformanceList:
+        case .getPerformanceList, .getPerformanceDetail:
             return .get
         }
     }
@@ -33,13 +39,15 @@ enum KOPISRouter {
     var queryParameters: Parameters? {
         switch self {
         case .getPerformanceList(let param):
-            param.toParameters()
+            return param.toParameters()
+        case .getPerformanceDetail(let apiKey, _):
+            return ["service": apiKey]
         }
     }
     
     var headers: HTTPHeaders? {
         switch self {
-        case .getPerformanceList:
+        case .getPerformanceList, .getPerformanceDetail:
             return nil
         }
     }
