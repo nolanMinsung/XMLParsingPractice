@@ -78,22 +78,34 @@ let performanceListParam = PerformanceListRequestParameter(
 
 // MARK: - 공연시설 목록
 
-let facilityListRequestParam = FacilityListRequestParameter(
-    service: InfoPlist.apiKey,
-    cpage: 1,
-    rows: 100,
-    shprfnmfct: "예술",
-    fcltychartr: nil,
-    signgucode: nil,
-    signgucodesub: nil,
-    afterdate: nil
-)
+//let facilityListRequestParam = FacilityListRequestParameter(
+//    service: InfoPlist.apiKey,
+//    cpage: 1,
+//    rows: 100,
+//    shprfnmfct: "예술",
+//    fcltychartr: nil,
+//    signgucode: nil,
+//    signgucodesub: nil,
+//    afterdate: nil
+//)
+//do {
+//    let facilityList = try await NetworkManager.requestValue(
+//        router: .getFacilityList(param: facilityListRequestParam),
+//        decodingType: FacilityListResponse.self
+//    )
+//    dump(facilityList)
+//} catch {
+//    dump(error)
+//}
+
+
+// MARK: - 공연시설 상세
 do {
-    let facilityList = try await NetworkManager.requestValue(
-        router: .getFacilityList(param: facilityListRequestParam),
-        decodingType: FacilityListResponse.self
+    let facilityDetail = try await NetworkManager.requestValue(
+        router: .getFacilityDetail(apiKey: InfoPlist.apiKey, facilityID: "FC001247"),
+        decodingType: FacilityDetailResponse.self
     )
-    dump(facilityList)
+    dump(facilityDetail)
 } catch {
     dump(error)
 }

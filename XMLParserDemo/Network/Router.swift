@@ -13,6 +13,7 @@ enum KOPISRouter {
     case getPerformanceList(param: PerformanceListRequestParameter)
     case getPerformanceDetail(apiKey: String, performanceID: String)
     case getFacilityList(param: FacilityListRequestParameter)
+    case getFacilityDetail(apiKey: String, facilityID: String)
 }
 
 extension KOPISRouter {
@@ -26,6 +27,8 @@ extension KOPISRouter {
             return "/pblprfr/\(performanceID)"
         case .getFacilityList:
             return "/prfplc"
+        case .getFacilityDetail(_, let facilityID):
+            return "/prfplc/\(facilityID)"
         }
     }
     var endPoint: String {
@@ -34,7 +37,7 @@ extension KOPISRouter {
     
     var method: HTTPMethod {
         switch self {
-        case .getPerformanceList, .getPerformanceDetail, .getFacilityList:
+        case .getPerformanceList, .getPerformanceDetail, .getFacilityList, .getFacilityDetail:
             return .get
         }
     }
@@ -47,12 +50,14 @@ extension KOPISRouter {
             return ["service": apiKey]
         case .getFacilityList(let param):
             return param.toParameters()
+        case .getFacilityDetail(let apiKey, _):
+            return ["service": apiKey]
         }
     }
     
     var headers: HTTPHeaders? {
         switch self {
-        case .getPerformanceList, .getPerformanceDetail, .getFacilityList:
+        case .getPerformanceList, .getPerformanceDetail, .getFacilityList, .getFacilityDetail:
             return nil
         }
     }
