@@ -1,5 +1,5 @@
 //
-//  BoxOfficeListResponse.swift
+//  BoxOfficeResponse.swift
 //  XMLParserDemo
 //
 //  Created by 김민성 on 9/25/25.
@@ -11,7 +11,7 @@ import XMLCoder
 /**
  * 최상위 `<boxofs>` XML 요소를 나타내는 구조체
  */
-struct BoxOfficeListResponse: Codable {
+struct BoxOfficeResponse: Codable {
     /// XML의 `<boxof>` 요소 배열에 해당
     let boxof: [BoxOfficeItem]
 }

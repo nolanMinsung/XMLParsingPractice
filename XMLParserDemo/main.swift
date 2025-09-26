@@ -23,7 +23,7 @@ import XMLCoder
 //    let performanceDetailXMLData = try XMLDecoder(trimValueWhitespaces: true, removeWhitespaceElements: true).decode(PerformanceDetailResponse.self, from: performanceDetailXMLData)
 //    let facilityListXMLData = try XMLDecoder(trimValueWhitespaces: true, removeWhitespaceElements: true).decode(FacilityListResponse.self, from: facilityListXMLData)
 //    let facilityDetailXMLData = try XMLDecoder(trimValueWhitespaces: true, removeWhitespaceElements: true).decode(FacilityDetailResponse.self, from: facilityDetailXMLData)
-//    let boxOfficeListXMLData = try XMLDecoder(trimValueWhitespaces: true, removeWhitespaceElements: true).decode(BoxOfficeListResponse.self, from: boxOfficeListXMLData)
+//    let boxOfficeListXMLData = try XMLDecoder(trimValueWhitespaces: true, removeWhitespaceElements: true).decode(BoxOfficeResponse.self, from: boxOfficeListXMLData)
 //    
 //    dump(performanceListXMLData)
 //    dump(performanceDetailXMLData)
@@ -112,23 +112,42 @@ let performanceListParam = PerformanceListRequestParameter(
 
 
 // MARK: - 예매상황판
+//let boxOfficeRequestParam = BoxOfficeRequestParameter(
+//    service: InfoPlist.apiKey,
+//    stdate: .now.addingTimeInterval(-3600 * 24 * 2),
+//    eddate: .now.addingTimeInterval(-3600 * 24 * 1),
+//    catecode: nil,
+//    area: nil,
+//    srchseatscale: nil
+//)
+//do {
+//    let boxOffice = try await NetworkManager.requestValue(
+//        router: .getBoxOffice(param: boxOfficeRequestParam),
+//        decodingType: BoxOfficeResponse.self
+//    )
+//    dump(boxOffice)
+//} catch {
+//    dump(error)
+//}
+
+
+let fetchBoxOfficeUseCase = DefaultFetchBoxOfficeUseCase()
+let homeViewModel = HomeViewModel(fetchBoxOffice: fetchBoxOfficeUseCase)
 let boxOfficeRequestParam = BoxOfficeRequestParameter(
     service: InfoPlist.apiKey,
-    stdate: .now.addingTimeInterval(-3600 * 24 * 2),
-    eddate: .now.addingTimeInterval(-3600 * 24 * 1),
-    catecode: nil,
-    area: nil,
-    srchseatscale: nil
+    stdate: .now.addingTimeInterval(-3600*24*3),
+    eddate: .now.addingTimeInterval(-3600*24*3)
 )
-do {
-    let boxOffice = try await NetworkManager.requestValue(
-        router: .getBoxOffice(param: boxOfficeRequestParam),
-        decodingType: BoxOfficeListResponse.self
-    )
-    dump(boxOffice)
-} catch {
-    dump(error)
+RunLoop.main.run()
+Task {
+    do {
+        let boxOfficeResponse = try await homeViewModel.fetchBoxOfficeUseCase.execute(requestInfo: boxOfficeRequestParam)
+        dump(boxOfficeResponse)
+    } catch {
+        print(error.localizedDescription)
+    }
 }
+
 
 //let s = try await NetworkManager.requestString(router: .getPerformanceList(param: performanceListParam))
 //let s = try await NetworkManager.requestString(router: .getPerformanceDetail(apiKey: InfoPlist.apiKey, performanceID: "PF275019"))
