@@ -12,6 +12,7 @@ import Alamofire
 enum KOPISRouter {
     case getPerformanceList(param: PerformanceListRequestParameter)
     case getPerformanceDetail(apiKey: String, performanceID: String)
+    case getFacilityList(param: FacilityListRequestParameter)
 }
 
 extension KOPISRouter {
@@ -23,6 +24,8 @@ extension KOPISRouter {
             return "/pblprfr"
         case .getPerformanceDetail(_, let performanceID):
             return "/pblprfr/\(performanceID)"
+        case .getFacilityList:
+            return "/prfplc"
         }
     }
     var endPoint: String {
@@ -31,7 +34,7 @@ extension KOPISRouter {
     
     var method: HTTPMethod {
         switch self {
-        case .getPerformanceList, .getPerformanceDetail:
+        case .getPerformanceList, .getPerformanceDetail, .getFacilityList:
             return .get
         }
     }
@@ -42,12 +45,14 @@ extension KOPISRouter {
             return param.toParameters()
         case .getPerformanceDetail(let apiKey, _):
             return ["service": apiKey]
+        case .getFacilityList(let param):
+            return param.toParameters()
         }
     }
     
     var headers: HTTPHeaders? {
         switch self {
-        case .getPerformanceList, .getPerformanceDetail:
+        case .getPerformanceList, .getPerformanceDetail, .getFacilityList:
             return nil
         }
     }

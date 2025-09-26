@@ -8,12 +8,11 @@
 import Foundation
 import Alamofire
 
-struct PerformanceListRequestParameter {
+struct PerformanceListRequestParameter: ParameterConvertible {
     let service = InfoPlist.apiKey
     let stdate: Date
     let eddate: Date
     let cpage: Int
-//    @Clipped(lowerBound: 0, upperBound: 100)
     var rows: Int
     
     let shprfnm: String?
@@ -58,41 +57,4 @@ struct PerformanceListRequestParameter {
         self.openrun = openrun
         self.afterdate = afterdate
     }
-}
-
-
-extension PerformanceListRequestParameter {
-    
-    func toParameters() -> Parameters {
-        let mirror = Mirror(reflecting: self)
-        var parameters: Parameters = [:]
-        
-        for child in mirror.children {
-            
-            guard let key = child.label else { continue }
-            let value = child.value
-            
-            let unwrappedValue: Any?
-            
-            if case Optional<Any>.some(let realValue) = value {
-                unwrappedValue = realValue
-            } else if case Optional<Any>.none = value {
-                unwrappedValue = nil
-            } else {
-                unwrappedValue = value
-            }
-            
-            if let finalValue = unwrappedValue {
-                if let date = finalValue as? Date {
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyyMMdd"
-                    parameters[key] = formatter.string(from: date)
-                } else {
-                    parameters[key] = finalValue
-                }
-            }
-        }
-        return parameters
-    }
-    
 }

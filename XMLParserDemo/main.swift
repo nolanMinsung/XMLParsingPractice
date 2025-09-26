@@ -35,6 +35,7 @@ import XMLCoder
 //}
 
 
+// MARK: - 공연 정보 목록
 let performanceListParam = PerformanceListRequestParameter(
     stdate: .now,
     eddate: .now.addingTimeInterval(3600 * 24 * 7),
@@ -52,7 +53,6 @@ let performanceListParam = PerformanceListRequestParameter(
 //    afterdate: <#T##String?#>
 )
 
-// MARK: - 공연 정보 목록
 //do {
 //    let performanceList = try await NetworkManager.requestValue(
 //        router: .getPerformanceList(param: performanceListParam),
@@ -65,15 +65,39 @@ let performanceListParam = PerformanceListRequestParameter(
 
 
 // MARK: - 공연 상세 정보
+//do {
+//    let performanceDetail = try await NetworkManager.requestValue(
+//        router: .getPerformanceDetail(apiKey: InfoPlist.apiKey, performanceID: "PF273149"),
+//        decodingType: PerformanceDetailResponse.self
+//    )
+//    dump(performanceDetail)
+//} catch {
+//    print(error.localizedDescription)
+//}
+
+
+// MARK: - 공연시설 목록
+
+let facilityListRequestParam = FacilityListRequestParameter(
+    service: InfoPlist.apiKey,
+    cpage: 1,
+    rows: 100,
+    shprfnmfct: "예술",
+    fcltychartr: nil,
+    signgucode: nil,
+    signgucodesub: nil,
+    afterdate: nil
+)
 do {
-    let performanceDetail = try await NetworkManager.requestValue(
-        router: .getPerformanceDetail(apiKey: InfoPlist.apiKey, performanceID: "PF273149"),
-        decodingType: PerformanceDetailResponse.self
+    let facilityList = try await NetworkManager.requestValue(
+        router: .getFacilityList(param: facilityListRequestParam),
+        decodingType: FacilityListResponse.self
     )
-    dump(performanceDetail)
+    dump(facilityList)
 } catch {
-    print(error.localizedDescription)
+    dump(error)
 }
+
 
 //let s = try await NetworkManager.requestString(router: .getPerformanceList(param: performanceListParam))
 //let s = try await NetworkManager.requestString(router: .getPerformanceDetail(apiKey: InfoPlist.apiKey, performanceID: "PF275019"))
