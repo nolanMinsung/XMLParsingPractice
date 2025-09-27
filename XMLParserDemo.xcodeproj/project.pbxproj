@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E9B002F2E86F58D00EB4408 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 4E9B002E2E86F58D00EB4408 /* RxCocoa */; };
+		4E9B00312E86F58D00EB4408 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4E9B00302E86F58D00EB4408 /* RxSwift */; };
 		4E9BFBD92E8516B000EB4408 /* XMLCoder in Frameworks */ = {isa = PBXBuildFile; productRef = 4E9BFBD82E8516B000EB4408 /* XMLCoder */; };
 		4E9BFBED2E85711C00EB4408 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 4E9BFBEC2E85711C00EB4408 /* Alamofire */; };
 /* End PBXBuildFile section */
@@ -41,7 +43,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E9B002F2E86F58D00EB4408 /* RxCocoa in Frameworks */,
 				4E9BFBD92E8516B000EB4408 /* XMLCoder in Frameworks */,
+				4E9B00312E86F58D00EB4408 /* RxSwift in Frameworks */,
 				4E9BFBED2E85711C00EB4408 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -88,6 +92,8 @@
 			packageProductDependencies = (
 				4E9BFBD82E8516B000EB4408 /* XMLCoder */,
 				4E9BFBEC2E85711C00EB4408 /* Alamofire */,
+				4E9B002E2E86F58D00EB4408 /* RxCocoa */,
+				4E9B00302E86F58D00EB4408 /* RxSwift */,
 			);
 			productName = XMLParserDemo;
 			productReference = 4EA0C5CF2E82C7C800AB97BA /* XMLParserDemo */;
@@ -120,6 +126,7 @@
 			packageReferences = (
 				4E9BFBD72E8516B000EB4408 /* XCRemoteSwiftPackageReference "XMLCoder" */,
 				4E9BFBEB2E85711C00EB4408 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				4E9B002D2E86F58D00EB4408 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 4EA0C5D02E82C7C800AB97BA /* Products */;
@@ -316,6 +323,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		4E9B002D2E86F58D00EB4408 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.0;
+			};
+		};
 		4E9BFBD72E8516B000EB4408 /* XCRemoteSwiftPackageReference "XMLCoder" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/CoreOffice/XMLCoder.git";
@@ -335,6 +350,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		4E9B002E2E86F58D00EB4408 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E9B002D2E86F58D00EB4408 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		4E9B00302E86F58D00EB4408 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E9B002D2E86F58D00EB4408 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
 		4E9BFBD82E8516B000EB4408 /* XMLCoder */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 4E9BFBD72E8516B000EB4408 /* XCRemoteSwiftPackageReference "XMLCoder" */;
