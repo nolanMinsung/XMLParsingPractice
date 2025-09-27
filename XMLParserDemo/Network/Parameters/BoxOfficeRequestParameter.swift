@@ -18,11 +18,11 @@ struct BoxOfficeRequestParameter: ParameterConvertible {
     /// 장르 구분 코드(예매상황판용)
     let catecode: String?
     /// 지역 코드(예매상황판용)
-    let area: Int?
+    let area: Constant.BoxOfficeArea?
     /// 좌석수
     let srchseatscale: Int?
     
-    init(service: String, stdate: Date, eddate: Date, catecode: String? = nil, area: Int? = nil, srchseatscale: Int? = nil) {
+    init(service: String, stdate: Date, eddate: Date, catecode: String? = nil, area: Constant.BoxOfficeArea? = nil, srchseatscale: Int? = nil) {
         self.service = service
         self.stdate = stdate
         self.eddate = eddate

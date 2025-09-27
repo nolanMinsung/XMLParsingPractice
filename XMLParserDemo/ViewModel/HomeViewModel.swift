@@ -12,25 +12,12 @@ import RxCocoa
 final class HomeViewModel {
     
     let fetchBoxOfficeUseCase: FetchBoxOfficeUseCase
+    let fetchPerformanceListUseCase: FetchPerformanceListUseCase
     
-    
-    
-    init(fetchBoxOffice: some FetchBoxOfficeUseCase) {
+    init(fetchBoxOffice: some FetchBoxOfficeUseCase,
+         fetchPerformanceList: some FetchPerformanceListUseCase) {
         self.fetchBoxOfficeUseCase = fetchBoxOffice
-        
-        // 박스오피스 호출해야 하는 시점이 되었다고 가정하자
-        let boxOfficeRequestParam = BoxOfficeRequestParameter(
-            service: InfoPlist.apiKey,
-            stdate: .now.addingDay(-2),
-            eddate: .now.addingDay(-1),
-            catecode: nil,
-            area: nil,
-            srchseatscale: nil
-        )
-        Task.detached {
-            let boxOfficeResponse = try await self.fetchBoxOfficeUseCase.execute(requestInfo: boxOfficeRequestParam)
-            dump(boxOfficeResponse)
-        }
+        self.fetchPerformanceListUseCase = fetchPerformanceList
     }
     
 }

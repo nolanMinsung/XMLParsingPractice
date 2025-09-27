@@ -22,7 +22,7 @@ struct PerformanceListRequestParameter: ParameterConvertible {
     let signgucode: String?
     let signgucodesub: String?
     let kidstate: String?
-    let prfstate: String?
+    let prfstate: Int?
     let openrun: String?
     let afterdate: String?
     
@@ -38,7 +38,7 @@ struct PerformanceListRequestParameter: ParameterConvertible {
         signgucode: String? = nil,
         signgucodesub: String? = nil,
         kidstate: String? = nil,
-        prfstate: String? = nil,
+        prfstate: Int? = nil,
         openrun: String? = nil,
         afterdate: String? = nil,
     ) {

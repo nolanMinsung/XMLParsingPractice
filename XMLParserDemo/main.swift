@@ -130,19 +130,44 @@ import XMLCoder
 //    dump(error)
 //}
 
-// 뷰컨트롤러 안에서..(아마 viewDidLoad?)
+// 홈 화면에서 박스오피스와 공연 목록을 불러오고 싶다면?..
 let fetchBoxOfficeUseCase = DefaultFetchBoxOfficeUseCase()
-let homeViewModel = HomeViewModel(fetchBoxOffice: fetchBoxOfficeUseCase)
-let boxOfficeRequestParam = BoxOfficeRequestParameter(
-    service: InfoPlist.apiKey,
-    stdate: .now.addingTimeInterval(-3600*24*3),
-    eddate: .now.addingTimeInterval(-3600*24*3)
+let fetchPerformanceListUseCase = DefaultFetchPerformanceListUseCase()
+let homeViewModel = HomeViewModel(
+    fetchBoxOffice: fetchBoxOfficeUseCase,
+    fetchPerformanceList: fetchPerformanceListUseCase
 )
+
 var taskIsFinished = false
 Task {
+    // 파라미터 준비
+    let boxOfficeRequestParam = BoxOfficeRequestParameter(
+        service: InfoPlist.apiKey,
+        stdate: .now.addingTimeInterval(-3600*24*3),
+        eddate: .now.addingTimeInterval(-3600*24*3)
+    )
+    let performanceListParam = PerformanceListRequestParameter(
+        stdate: .now.addingDay(-60),
+        eddate: .now.addingDay(-1),
+        cpage: 1,
+        rows: 100,
+        shprfnm: nil,
+        shprfnmfct: nil,
+        shcate: nil,
+//        prfplccd: "FC001247",
+        signgucode: nil,
+        signgucodesub: nil,
+        kidstate: nil,
+        prfstate: 3,
+        openrun: nil,
+        afterdate: nil
+    )
+    
     do {
         let boxOfficeResponse = try await homeViewModel.fetchBoxOfficeUseCase.execute(requestInfo: boxOfficeRequestParam)
+        let performanceListResponse = try await homeViewModel.fetchPerformanceListUseCase.execute(requestInfo: performanceListParam)
         dump(boxOfficeResponse)
+        dump(performanceListResponse)
         taskIsFinished = true
     } catch {
         print(error.localizedDescription)
@@ -153,8 +178,3 @@ Task {
 while !taskIsFinished && RunLoop.current.run(mode: .default, before: .distantFuture) {
     // RunLoop가 이벤트를 처리하며 대기
 }
-
-
-//let s = try await NetworkManager.requestString(router: .getPerformanceList(param: performanceListParam))
-//let s = try await NetworkManager.requestString(router: .getPerformanceDetail(apiKey: InfoPlist.apiKey, performanceID: "PF275019"))
-//print(s)
