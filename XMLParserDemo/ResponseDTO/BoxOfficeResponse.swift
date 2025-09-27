@@ -13,14 +13,14 @@ import XMLCoder
  */
 struct BoxOfficeResponse: Codable {
     /// XML의 `<boxof>` 요소 배열에 해당
-    let boxof: [BoxOfficeItem]
+    let boxof: [BoxOfficeItemResponse]
 }
 
 /**
  * `<boxof>` XML 요소를 나타내는 구조체
  * 박스오피스 순위권에 있는 공연 하나의 정보를 담음.
  */
-struct BoxOfficeItem: Codable, Hashable {
+struct BoxOfficeItemResponse: Codable, Hashable {
     /// 장르
     let cate: String
     

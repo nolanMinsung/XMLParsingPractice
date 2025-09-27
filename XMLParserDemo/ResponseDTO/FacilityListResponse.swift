@@ -14,7 +14,7 @@ import XMLCoder
  */
 struct FacilityListResponse: Codable {
     /// XML의 `<db>` 요소 배열에 해당.
-    let db: [Facility]
+    let db: [FacilityResponse]
 }
 
 /**
@@ -22,7 +22,7 @@ struct FacilityListResponse: Codable {
  * 공연 시설 하나의 정보를 담음.
  * XML의 빈 태그(<opende></opende>)는 디코딩 시 빈 문자열("")로 처리됨.
  */
-struct Facility: Codable, Hashable {
+struct FacilityResponse: Codable, Hashable {
     /// 시설명
     let fcltynm: String
     

@@ -8,15 +8,15 @@
 import Foundation
 
 protocol FetchFacilityDetailUseCase {
-    func execute(facilityID: String) async throws -> FacilityDetailResponse
+    func execute(facilityID: String) async throws -> FacilityDetailListResponse
 }
 
 
 final class DefaultFetchFacilityDetailUseCase: FetchFacilityDetailUseCase {
-    func execute(facilityID: String) async throws -> FacilityDetailResponse {
+    func execute(facilityID: String) async throws -> FacilityDetailListResponse {
         try await NetworkManager.requestValue(
             router: .getFacilityDetail(apiKey: InfoPlist.apiKey, facilityID: facilityID),
-            decodingType: FacilityDetailResponse.self
+            decodingType: FacilityDetailListResponse.self
         )
     }
 }

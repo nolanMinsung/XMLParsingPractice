@@ -14,14 +14,14 @@ import XMLCoder
  */
 struct PerformanceListResponse: Codable {
     /// XML의 `<db>` 요소 배열에 해당
-    let db: [Performance]
+    let db: [PerformanceResponse]
 }
 
 /**
  * `<db>` XML 요소를 나타내는 구조체.
  * 공연 하나에 대한 상세 정보를 담고 있음.
  */
-struct Performance: Codable, Hashable {
+struct PerformanceResponse: Codable, Hashable {
     /// 공연 ID
     let mt20id: String
     

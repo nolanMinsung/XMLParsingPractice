@@ -1,5 +1,5 @@
 //
-//  FacilityDetailResponse.swift
+//  FacilityDetailListResponse.swift
 //  XMLParserDemo
 //
 //  Created by 김민성 on 9/25/25.
@@ -11,16 +11,16 @@ import XMLCoder
 /**
  * 최상위 `<dbs>` XML 요소를 나타내는 구조체
  */
-struct FacilityDetailResponse: Codable {
+struct FacilityDetailListResponse: Codable {
     /// XML의 `<db>` 요소에 해당. 상세 정보는 배열이 아닌 단일 객체일 수 있으나,
     /// XML 구조상 복수형(`dbs`)으로 되어 있어 배열로 처리하는 것이 안전
-    let db: [FacilityDetail]
+    let db: [FacilityDetailResponse]
 }
 
 /**
  * `<db>` XML 요소를 나타내는 구조체로, 공연 시설의 상세 정보를 담음.
  */
-struct FacilityDetail: Codable, Hashable {
+struct FacilityDetailResponse: Codable, Hashable {
     let fcltynm: String
     let mt10id: String
     let mt13cnt: String
@@ -44,22 +44,22 @@ struct FacilityDetail: Codable, Hashable {
     let parkinglot: String?
     
     /// `<mt13s>` 태그에 해당하는 중첩된 공연장 목록
-    let mt13s: PerformancePlaceList
+    let mt13s: PerformancePlaceListResponse
 }
 
 /**
  * `<mt13s>` XML 요소를 나타내는 구조체
  * 내부에 여러 개의 `<mt13>` 객체를 배열로 가짐.
  */
-struct PerformancePlaceList: Codable, Hashable {
-    let mt13: [PerformancePlace]
+struct PerformancePlaceListResponse: Codable, Hashable {
+    let mt13: [PerformancePlaceResponse]
 }
 
 /**
  * `<mt13>` XML 요소를 나타내는 구조체
  * 개별 공연장의 상세 정보를 담음
  */
-struct PerformancePlace: Codable, Hashable {
+struct PerformancePlaceResponse: Codable, Hashable {
     let prfplcnm: String
     let mt13id: String
     let seatscale: String
