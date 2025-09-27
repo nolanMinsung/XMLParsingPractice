@@ -46,17 +46,21 @@ extension KOPISRouter {
     }
     
     var queryParameters: Parameters? {
-        switch self {
-        case .getPerformanceList(let param):
-            return param.toParameters()
-        case .getPerformanceDetail(let apiKey, _):
-            return ["service": apiKey]
-        case .getFacilityList(let param):
-            return param.toParameters()
-        case .getFacilityDetail(let apiKey, _):
-            return ["service": apiKey]
-        case .getBoxOffice(let param):
-            return param.toParameters()
+        get throws {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "yyyyMMdd"
+            switch self {
+            case .getPerformanceList(let param):
+                return try param.asParameters(dateEncodingStrategy: .formatted(formatter))
+            case .getPerformanceDetail(let apiKey, _):
+                return ["service": apiKey]
+            case .getFacilityList(let param):
+                return try param.asParameters(dateEncodingStrategy: .formatted(formatter))
+            case .getFacilityDetail(let apiKey, _):
+                return ["service": apiKey]
+            case .getBoxOffice(let param):
+                return try param.asParameters(dateEncodingStrategy: .formatted(formatter))
+            }
         }
     }
     

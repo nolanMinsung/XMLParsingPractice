@@ -38,7 +38,7 @@ final class NetworkManager {
         let request = AF.request(
             router.endPoint,
             method: router.method,
-            parameters: router.queryParameters,
+            parameters: try router.queryParameters,
             headers: router.headers,
         )
         
@@ -54,7 +54,7 @@ final class NetworkManager {
         let request = AF.request(
             router.endPoint,
             method: router.method,
-            parameters: router.queryParameters,
+            parameters: try router.queryParameters,
             encoding: URLEncoding.queryString,
             headers: router.headers,
         )

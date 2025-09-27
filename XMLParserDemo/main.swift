@@ -146,28 +146,28 @@ Task {
         stdate: .now.addingTimeInterval(-3600*24*3),
         eddate: .now.addingTimeInterval(-3600*24*3)
     )
-    let performanceListParam = PerformanceListRequestParameter(
-        stdate: .now.addingDay(-60),
-        eddate: .now.addingDay(-1),
-        cpage: 1,
-        rows: 100,
-        shprfnm: nil,
-        shprfnmfct: nil,
-        shcate: nil,
-//        prfplccd: "FC001247",
-        signgucode: nil,
-        signgucodesub: nil,
-        kidstate: nil,
-        prfstate: 3,
-        openrun: nil,
-        afterdate: nil
-    )
+//    let performanceListParam = PerformanceListRequestParameter(
+//        stdate: .now.addingDay(-60),
+//        eddate: .now.addingDay(-1),
+//        cpage: 1,
+//        rows: 100,
+//        shprfnm: nil,
+//        shprfnmfct: nil,
+//        shcate: nil,
+////        prfplccd: "FC001247",
+//        signgucode: nil,
+//        signgucodesub: nil,
+//        kidstate: nil,
+//        prfstate: 3,
+//        openrun: nil,
+//        afterdate: nil
+//    )
     
     do {
         let boxOfficeResponse = try await homeViewModel.fetchBoxOfficeUseCase.execute(requestInfo: boxOfficeRequestParam)
-        let performanceListResponse = try await homeViewModel.fetchPerformanceListUseCase.execute(requestInfo: performanceListParam)
+//        let performanceListResponse = try await homeViewModel.fetchPerformanceListUseCase.execute(requestInfo: performanceListParam)
         dump(boxOfficeResponse)
-        dump(performanceListResponse)
+//        dump(performanceListResponse)
         taskIsFinished = true
     } catch {
         print(error.localizedDescription)

@@ -8,54 +8,14 @@
 import Foundation
 import Alamofire
 
-protocol ParameterConvertible: Encodable {
-    func toParameters() -> Parameters
-    func asParameters(dateEncodingStrategy: DateEncodingStrategy) throws -> [String: Any]
-}
-
 enum DateEncodingStrategy {
     case formatted(DateFormatter)
     case iso8601
     case custom((Date) -> String)
 }
 
-
-extension ParameterConvertible {
-    
-    func toParameters() -> Parameters {
-        let mirror = Mirror(reflecting: self)
-        var parameters: Parameters = [:]
-        
-        for child in mirror.children {
-            
-            guard let key = child.label else { continue }
-            let value = child.value
-            
-            let unwrappedValue: Any?
-            
-            if case Optional<Any>.some(let realValue) = value {
-                unwrappedValue = realValue
-            } else if case Optional<Any>.none = value {
-                unwrappedValue = nil
-            } else {
-                unwrappedValue = value
-            }
-            
-            if let finalValue = unwrappedValue {
-                if let date = finalValue as? Date {
-                    let formatter = DateFormatter()
-                    formatter.dateFormat = "yyyyMMdd"
-                    parameters[key] = formatter.string(from: date)
-                } else if let boxOfficeAreaCode = finalValue as? Constant.BoxOfficeArea {
-                    parameters[key] = boxOfficeAreaCode.rawValue
-                } else {
-                    parameters[key] = finalValue
-                }
-            }
-        }
-        return parameters
-    }
-    
+protocol ParameterConvertible: Encodable {
+    func asParameters(dateEncodingStrategy: DateEncodingStrategy) throws -> [String: Any]
 }
 
 extension ParameterConvertible {
