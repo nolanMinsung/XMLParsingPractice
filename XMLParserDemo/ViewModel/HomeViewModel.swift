@@ -6,10 +6,14 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 final class HomeViewModel {
     
     let fetchBoxOfficeUseCase: FetchBoxOfficeUseCase
+    
+    
     
     init(fetchBoxOffice: some FetchBoxOfficeUseCase) {
         self.fetchBoxOfficeUseCase = fetchBoxOffice
@@ -17,8 +21,8 @@ final class HomeViewModel {
         // 박스오피스 호출해야 하는 시점이 되었다고 가정하자
         let boxOfficeRequestParam = BoxOfficeRequestParameter(
             service: InfoPlist.apiKey,
-            stdate: .now.addingTimeInterval(-3600 * 24 * 2),
-            eddate: .now.addingTimeInterval(-3600 * 24 * 1),
+            stdate: .now.addingDay(-2),
+            eddate: .now.addingDay(-1),
             catecode: nil,
             area: nil,
             srchseatscale: nil

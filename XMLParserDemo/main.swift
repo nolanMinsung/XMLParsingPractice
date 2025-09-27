@@ -36,22 +36,22 @@ import XMLCoder
 
 
 // MARK: - 공연 정보 목록
-let performanceListParam = PerformanceListRequestParameter(
-    stdate: .now,
-    eddate: .now.addingTimeInterval(3600 * 24 * 7),
-    cpage: 1,
-    rows: 101,
+//let performanceListParam = PerformanceListRequestParameter(
+//    stdate: .now,
+//    eddate: .now.addingTimeInterval(3600 * 24 * 7),
+//    cpage: 1,
+//    rows: 101,
 //    shprfnm: nil,
 //    shprfnmfct: nil,
 //    shcate: nil,
-    prfplccd: "FC001247",
+//    prfplccd: "FC001247",
 //    signgucode: nil,
 //    signgucodesub: nil,
 //    kidstate: nil,
 //    prfstate: nil,
 //    openrun: nil,
 //    afterdate: nil
-)
+//)
 
 //do {
 //    let performanceList = try await NetworkManager.requestValue(
@@ -130,7 +130,7 @@ let performanceListParam = PerformanceListRequestParameter(
 //    dump(error)
 //}
 
-
+// 뷰컨트롤러 안에서..(아마 viewDidLoad?)
 let fetchBoxOfficeUseCase = DefaultFetchBoxOfficeUseCase()
 let homeViewModel = HomeViewModel(fetchBoxOffice: fetchBoxOfficeUseCase)
 let boxOfficeRequestParam = BoxOfficeRequestParameter(
@@ -138,14 +138,20 @@ let boxOfficeRequestParam = BoxOfficeRequestParameter(
     stdate: .now.addingTimeInterval(-3600*24*3),
     eddate: .now.addingTimeInterval(-3600*24*3)
 )
-RunLoop.main.run()
+var taskIsFinished = false
 Task {
     do {
         let boxOfficeResponse = try await homeViewModel.fetchBoxOfficeUseCase.execute(requestInfo: boxOfficeRequestParam)
         dump(boxOfficeResponse)
+        taskIsFinished = true
     } catch {
         print(error.localizedDescription)
+        taskIsFinished = true
     }
+}
+
+while !taskIsFinished && RunLoop.current.run(mode: .default, before: .distantFuture) {
+    // RunLoop가 이벤트를 처리하며 대기
 }
 
 
