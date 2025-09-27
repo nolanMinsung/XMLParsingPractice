@@ -8,8 +8,15 @@
 import Foundation
 import Alamofire
 
-protocol ParameterConvertible {
+protocol ParameterConvertible: Encodable {
     func toParameters() -> Parameters
+    func asParameters(dateEncodingStrategy: DateEncodingStrategy) throws -> [String: Any]
+}
+
+enum DateEncodingStrategy {
+    case formatted(DateFormatter)
+    case iso8601
+    case custom((Date) -> String)
 }
 
 
@@ -39,6 +46,8 @@ extension ParameterConvertible {
                     let formatter = DateFormatter()
                     formatter.dateFormat = "yyyyMMdd"
                     parameters[key] = formatter.string(from: date)
+                } else if let boxOfficeAreaCode = finalValue as? Constant.BoxOfficeArea {
+                    parameters[key] = boxOfficeAreaCode.rawValue
                 } else {
                     parameters[key] = finalValue
                 }
@@ -47,4 +56,34 @@ extension ParameterConvertible {
         return parameters
     }
     
+}
+
+extension ParameterConvertible {
+    func asParameters(dateEncodingStrategy: DateEncodingStrategy = .iso8601) throws -> [String: Any] {
+        let encoder = JSONEncoder()
+        
+        switch dateEncodingStrategy {
+        case .formatted(let formatter):
+            encoder.dateEncodingStrategy = .formatted(formatter)
+        case .iso8601:
+            encoder.dateEncodingStrategy = .iso8601
+        case .custom(let transform):
+            encoder.dateEncodingStrategy = .custom { date, encoder in
+                var container = encoder.singleValueContainer()
+                try container.encode(transform(date))
+            }
+        }
+
+        let data = try encoder.encode(self)
+        let object = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+
+        guard var dict = object as? [String: Any] else {
+            throw NSError(domain: "ParameterEncodingError", code: -1, userInfo: nil)
+        }
+
+        // nil 제거 (Encodable에서는 nil이 빠지긴 하지만 안전하게 처리)
+        dict = dict.filter { !($0.value is NSNull) }
+        print(dict)
+        return dict
+    }
 }
